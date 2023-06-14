@@ -33,6 +33,7 @@
 import {defineComponent} from "vue";
 import {IonButton,IonPage,IonCard,IonCardHeader,IonInput,IonItem,IonLabel,IonCardContent,IonCardTitle} from "@ionic/vue"
 import axios from "axios";
+import router from '../../router/index'
 
 export default defineComponent({
   name: 'RegisterPage',
@@ -53,6 +54,13 @@ export default defineComponent({
       axios.post('http://localhost:8082/api/user/register', requestBody)
           .then(response => {
             console.log(response)
+            if(this.role === 'user') {
+              console.log('user')
+              router.push('/user')
+            } else if(this.role === 'admin') {
+              console.log('admin')
+              router.push('/admin')
+            }
           })
           .catch(error => {
             // Gérer les erreurs de l'appel à l'API

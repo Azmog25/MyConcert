@@ -19,6 +19,7 @@
             </ion-item>
 
             <ion-button expand="full" color="purple" class="purple-button" @click="login()">Connexion</ion-button>
+            <ion-button expand="full" color="purple" class="purple-button" @click="register()">Inscription</ion-button>
           </ion-card-content>
         </ion-card>
       </div>
@@ -66,6 +67,9 @@ export default defineComponent ({
             console.log('Erreur lors de la connexion :', error);
           });
     },
+    register() {
+      router.push('/register')
+    }
   },
   components: {
     IonButton,

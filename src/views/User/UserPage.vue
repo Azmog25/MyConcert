@@ -2,12 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button color="dark" @click="goBack()">
-            <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Ajouter un concert</ion-title>
+        <ion-title class="header-title">Bienvenue sur l'application MyConcert</ion-title>
         <ion-buttons slot="end">
           <ion-button color="danger" @click="logout()">Déconnexion</ion-button>
         </ion-buttons>
@@ -15,92 +10,60 @@
     </ion-header>
 
     <ion-content class="ion-padding">
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">Nom du concert</ion-label>
-          <ion-input v-model="concert.name"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Description du concert</ion-label>
-          <ion-textarea v-model="concert.description"></ion-textarea>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Date du concert</ion-label>
-          <ion-datetime v-model="concert.date" display-format="DD/MM/YYYY"></ion-datetime>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Heure du concert</ion-label>
-          <ion-datetime v-model="concert.time" display-format="HH:mm" picker-format="HH:mm"></ion-datetime>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">Catégorie du groupe</ion-label>
-          <ion-select v-model="concert.category">
-            <ion-select-option v-for="category in categories" :value="category.id" :key="category.id">
-              {{ category.name }}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
+      <div class="home-container">
+        <img src="/assets/logo.png" alt="Logo MyConcert" class="logo-image">
+        <ion-button expand="full" color="success" @click="createConcert()">Créer un concert</ion-button>
+        <ion-button expand="full" color="purple" @click="manageConcerts()">Gérer les concerts</ion-button>
+      </div>
     </ion-content>
-
-    <ion-footer>
-      <ion-toolbar>
-        <ion-button expand="full" color="success" @click="addConcert()">Ajouter le concert</ion-button>
-      </ion-toolbar>
-    </ion-footer>
   </ion-page>
 </template>
 
 <script>
-import axios from 'axios';
+import { defineComponent } from "vue";
+import {IonButton,IonPage,IonCard,IonCardHeader,IonInput,IonItem,IonLabel,IonCardContent,IonCardTitle} from "@ionic/vue"
+import router from '../../router/index'
 
-export default {
+export default defineComponent({
+  name: 'UserPage',
   data() {
     return {
-      concert: {
-        name: '',
-        description: '',
-        date: '',
-        time: '',
-        category: ''
-      },
-      categories: []
-    };
-  },
-  methods: {
-    async fetchCategories() {
-      try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/categories');
-        this.categories = response.data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    goBack() {
-      // Action à effectuer lors du clic sur le bouton de retour
-      console.log("Retour");
-    },
-    addConcert() {
-      // Action à effectuer lors du clic sur le bouton "Ajouter le concert"
-      console.log("Ajouter le concert", this.concert);
-    },
-    logout() {
-      // Action à effectuer lors du clic sur le bouton "Déconnexion"
-      console.log("Déconnexion");
+      username: '',
+      password: '',
+      role: ''
     }
   },
-  mounted() {
-    this.fetchCategories();
+  methods: {
+    createConcert() {
+      // Action à effectuer lors du clic sur le bouton "Créer un concert"
+      console.log("Créer un concert");
+      router.push('/addConcert')
+    },
+    manageConcerts() {
+      // Action à effectuer lors du clic sur le bouton "Gérer les concerts"
+      console.log("Gérer les concerts");
+    }
+  },
+  components: {
+    IonButton,
+    IonPage,
+    IonCard,
+    IonCardHeader,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonCardContent,
+    IonCardTitle
   }
-};
+});
 </script>
 
 <style scoped>
-ion-content {
-  --ion-background-color: #f4f4f4;
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 </style>
